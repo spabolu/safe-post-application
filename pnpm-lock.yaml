@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       '@ai-sdk/google':
-        specifier: latest
+        specifier: 2.0.43
         version: 2.0.43(zod@3.25.76)
       '@hookform/resolvers':
         specifier: ^3.10.0

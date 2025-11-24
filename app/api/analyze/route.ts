@@ -1,5 +1,4 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { google, GoogleGenerativeAIProviderOptions } from '@ai-sdk/google'
 import { generateObject } from "ai"
 import { z } from "zod"
 
@@ -25,10 +24,10 @@ export async function POST(request: NextRequest) {
     const base64Image = buffer.toString("base64")
     const mimeType = image.type
 
-    const model = google('gemini-3-pro-preview');
+    console.log("[v0] Starting image analysis with AI Gateway")
 
     const { object } = await generateObject({
-      model: model,
+      model: "google/gemini-2.5-pro-preview-05-06",
       schema: piiAnalysisSchema,
       messages: [
         {
@@ -61,6 +60,8 @@ Determine if the image is safe to post on social media. Provide a clear reasonin
         },
       ],
     })
+
+    console.log("[v0] Analysis complete:", object)
 
     return NextResponse.json(object)
   } catch (error) {

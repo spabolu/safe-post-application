@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { google, GoogleGenerativeAIProviderOptions } from '@ai-sdk/google'
 import { generateObject } from "ai"
 import { z } from "zod"
 
@@ -24,8 +25,10 @@ export async function POST(request: NextRequest) {
     const base64Image = buffer.toString("base64")
     const mimeType = image.type
 
+    const model = google('gemini-3-pro-preview');
+
     const { object } = await generateObject({
-      model: "openai/gpt-4o",
+      model: model,
       schema: piiAnalysisSchema,
       messages: [
         {

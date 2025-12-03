@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card"
-import { CheckCircle2, AlertTriangle } from 'lucide-react'
+import { CheckCircle2, AlertTriangle, Flag } from 'lucide-react'
 import { cn } from "@/lib/utils"
 
 interface ResultCardProps {
@@ -13,9 +13,10 @@ interface ResultCardProps {
     licensePlates: boolean
     redactionSuggestions?: string[]
   }
+  onReport?: () => void
 }
 
-export function ResultCard({ result }: ResultCardProps) {
+export function ResultCard({ result, onReport }: ResultCardProps) {
   return (
     <Card
       className={cn(
@@ -103,6 +104,16 @@ export function ResultCard({ result }: ResultCardProps) {
                 </ul>
               </div>
             )}
+            <div className="mt-4 pt-4 border-t border-border">
+              <button
+                onClick={onReport}
+                className="cursor-pointer flex items-center gap-2 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-muted/50"
+                type="button"
+              >
+                <Flag className="h-4 w-4" />
+                <span>Report Incorrect Analysis</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

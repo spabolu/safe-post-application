@@ -18,6 +18,36 @@ export default function Home() {
   } | null>(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
 
+  const handleReportIncorrect = async () => {
+    if (!result) return
+
+    console.log("[SafePost] User reported incorrect analysis:", {
+      result,
+      timestamp: new Date().toISOString(),
+    })
+
+    try {
+      const response = await fetch("/api/report", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          result,
+          timestamp: new Date().toISOString(),
+        }),
+      })
+
+      if (response.ok) {
+        console.log("[SafePost] Report submitted successfully")
+      } else {
+        console.error("[SafePost] Failed to submit report:", response.statusText)
+      }
+    } catch (error) {
+      console.error("[SafePost] Error submitting report:", error)
+    }
+  }
+
   const handleImageAnalysis = async (file: File) => {
     setIsAnalyzing(true)
     setResult(null)
@@ -80,7 +110,7 @@ export default function Home() {
 
           <ImageUpload onImageSelect={handleImageAnalysis} isAnalyzing={isAnalyzing} />
 
-          {result && <ResultCard result={result} />}
+          {result && <ResultCard result={result} onReport={handleReportIncorrect} />}
         </div>
       </main>
 

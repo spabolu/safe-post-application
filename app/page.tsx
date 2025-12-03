@@ -1,11 +1,13 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { ImageUpload } from "@/components/image-upload"
 import { ResultCard } from "@/components/result-card"
-import { Shield } from 'lucide-react'
+import { Shield, LogOut } from 'lucide-react'
 
 export default function Home() {
+  const router = useRouter()
   const [result, setResult] = useState<{
     safe: boolean
     message: string
@@ -17,6 +19,16 @@ export default function Home() {
     redactionSuggestions?: string[]
   } | null>(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
+
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" })
+      router.push("/login")
+      router.refresh()
+    } catch (error) {
+      console.error("Error logging out:", error)
+    }
+  }
 
   const handleReportIncorrect = async () => {
     if (!result) return
@@ -85,14 +97,23 @@ export default function Home() {
       {/* Header */}
       <header className="border-b border-border bg-card">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-              <Shield className="h-6 w-6 text-primary-foreground" />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
+                <Shield className="h-6 w-6 text-primary-foreground" />
+              </div>
+              <div>
+                <h1 className="text-xl font-semibold text-foreground">SafePost</h1>
+                <p className="text-sm text-muted-foreground">Check before you post</p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-xl font-semibold text-foreground">SafePost</h1>
-              <p className="text-sm text-muted-foreground">Check before you post</p>
-            </div>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-lg transition-colors"
+            >
+              <LogOut className="h-4 w-4" />
+              Logout
+            </button>
           </div>
         </div>
       </header>

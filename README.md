@@ -40,3 +40,17 @@ python main.py
 ```
 
 Create a `test_images` folder and add your test images there.
+
+## Analysis
+
+Generate confusion matrices and performance charts from test results:
+
+```bash
+# Install analysis dependencies
+pip install -r requirements_analysis.txt
+
+# Run analysis
+python analyze_results.py
+```
+
+This will generate charts and metrics from the CSV results in `test_results_output/analysis/`.

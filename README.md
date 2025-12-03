@@ -30,3 +30,13 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 - Addresses
 - Phone numbers
 - License plates
+
+## Testing
+
+Run the test script to analyze multiple images:
+
+```bash
+python main.py
+```
+
+Create a `test_images` folder and add your test images there.

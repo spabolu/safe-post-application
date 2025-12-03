@@ -1,30 +1,32 @@
-# SafePost application
+# SafePost
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+Check if your images contain personally identifiable information (PII) before posting on social media.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/sakeths-projects-d6c1844f/v0-safe-post-application)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/sotWXLsSxR1)
+## Setup
 
-## Overview
+1. Install dependencies:
+```bash
+npm install
+```
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+2. Create a `.env.local` file with your Google Gemini API key:
+```env
+GEMINI_API_KEY=your-api-key-here
+```
 
-## Deployment
+Get your API key from [Google AI Studio](https://aistudio.google.com/apikey).
 
-Your project is live at:
+## Run
 
-**[https://vercel.com/sakeths-projects-d6c1844f/v0-safe-post-application](https://vercel.com/sakeths-projects-d6c1844f/v0-safe-post-application)**
+```bash
+npm run dev
+```
 
-## Build your app
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Continue building your app on:
+## What it checks
 
-**[https://v0.app/chat/sotWXLsSxR1](https://v0.app/chat/sotWXLsSxR1)**
-
-## How It Works
-
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+- Email addresses
+- Addresses
+- Phone numbers
+- License plates

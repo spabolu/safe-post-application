@@ -10,7 +10,11 @@ export default function Home() {
     safe: boolean
     message: string
     reasoning?: string
-    details?: string[]
+    emails: boolean
+    address: boolean
+    phoneNumbers: boolean
+    licensePlates: boolean
+    redactionSuggestions?: string[]
   } | null>(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
 
@@ -35,7 +39,11 @@ export default function Home() {
         safe: false,
         message: "Error analyzing image",
         reasoning: "We encountered an error while processing your image.",
-        details: ["An error occurred while analyzing your image. Please try again."],
+        emails: false,
+        address: false,
+        phoneNumbers: false,
+        licensePlates: false,
+        redactionSuggestions: [],
       })
     } finally {
       setIsAnalyzing(false)

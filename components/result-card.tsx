@@ -7,7 +7,11 @@ interface ResultCardProps {
     safe: boolean
     message: string
     reasoning?: string
-    details?: string[]
+    emails: boolean
+    address: boolean
+    phoneNumbers: boolean
+    licensePlates: boolean
+    redactionSuggestions?: string[]
   }
 }
 
@@ -33,16 +37,67 @@ export function ResultCard({ result }: ResultCardProps) {
               {result.message}
             </h3>
             {result.reasoning && <p className="text-muted-foreground">{result.reasoning}</p>}
-            {result.details && result.details.length > 0 && (
-              <div className="space-y-2">
-                <p className="text-sm font-medium text-foreground">
-                  {result.safe ? "Analysis complete:" : "Issues detected:"}
-                </p>
-                <ul className="space-y-1">
-                  {result.details.map((detail, index) => (
+            <div className="space-y-3 mt-4">
+              <p className="text-sm font-medium text-foreground">PII Detection Results:</p>
+              <div className="grid grid-cols-2 gap-3">
+                <div className={cn(
+                  "flex items-center gap-2 p-2 rounded-md",
+                  result.emails ? "bg-destructive/10" : "bg-success/10"
+                )}>
+                  <span className={cn(
+                    "text-xs font-medium",
+                    result.emails ? "text-destructive" : "text-success"
+                  )}>
+                    {result.emails ? "✗" : "✓"}
+                  </span>
+                  <span className="text-sm text-foreground">Emails</span>
+                </div>
+                <div className={cn(
+                  "flex items-center gap-2 p-2 rounded-md",
+                  result.address ? "bg-destructive/10" : "bg-success/10"
+                )}>
+                  <span className={cn(
+                    "text-xs font-medium",
+                    result.address ? "text-destructive" : "text-success"
+                  )}>
+                    {result.address ? "✗" : "✓"}
+                  </span>
+                  <span className="text-sm text-foreground">Address</span>
+                </div>
+                <div className={cn(
+                  "flex items-center gap-2 p-2 rounded-md",
+                  result.phoneNumbers ? "bg-destructive/10" : "bg-success/10"
+                )}>
+                  <span className={cn(
+                    "text-xs font-medium",
+                    result.phoneNumbers ? "text-destructive" : "text-success"
+                  )}>
+                    {result.phoneNumbers ? "✗" : "✓"}
+                  </span>
+                  <span className="text-sm text-foreground">Phone Numbers</span>
+                </div>
+                <div className={cn(
+                  "flex items-center gap-2 p-2 rounded-md",
+                  result.licensePlates ? "bg-destructive/10" : "bg-success/10"
+                )}>
+                  <span className={cn(
+                    "text-xs font-medium",
+                    result.licensePlates ? "text-destructive" : "text-success"
+                  )}>
+                    {result.licensePlates ? "✗" : "✓"}
+                  </span>
+                  <span className="text-sm text-foreground">License Plates</span>
+                </div>
+              </div>
+            </div>
+            {!result.safe && result.redactionSuggestions && result.redactionSuggestions.length > 0 && (
+              <div className="space-y-2 mt-4 pt-4 border-t border-border">
+                <p className="text-sm font-medium text-foreground">Redaction Suggestions:</p>
+                <ul className="space-y-1.5">
+                  {result.redactionSuggestions.map((suggestion, index) => (
                     <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
-                      <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-muted-foreground" />
-                      <span>{detail}</span>
+                      <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-primary" />
+                      <span>{suggestion}</span>
                     </li>
                   ))}
                 </ul>
